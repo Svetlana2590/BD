@@ -11,11 +11,13 @@
         <tr>
             <th>Товар</th>
             <th>Количество</th>
+            <th>Действие</th>
         </tr>
         {% for product in products %}
         <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.quantity }}</td>
+            <td><a href="{{ url_for('increase_quantity', product_id=product.id) }}">Увеличить на 10</a></td>
         </tr>
         {% endfor %}
     </table>

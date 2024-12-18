@@ -27,10 +27,24 @@ def add_sample_products():
     db.session.commit()
 
 
+with app.app_context():
+    if Product.query.count() == 0:
+        add_sample_products()
+
+
 @app.route('/')
 def index():
     products = Product.query.all()
     return render_template('index.html', products=products)
+
+
+@app.route('/increase_quantity/<int:product_id>')
+def increase_quantity(product_id):
+    product = Product.query.filter_by(id=product_id).one_or_none()
+    if product:
+        product.quantity += 10
+        db.session.commit()
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
